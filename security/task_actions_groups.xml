@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Categorie de groupe -->
+    <record id="module_category_task_actions" model="ir.module.category">
+        <field name="name">Task Actions</field>
+        <field name="sequence">30</field>
+    </record>
+
+    <!-- Groupe Utilisateur -->
+    <record id="group_task_actions_user" model="res.groups">
+        <field name="name">Actions - Utilisateur</field>
+    </record>
+
+    <!-- Groupe Manager -->
+    <record id="group_task_actions_manager" model="res.groups">
+        <field name="name">Actions - Manager</field>
+        <field name="implied_ids" eval="[(4, ref('task_actions.group_task_actions_user'))]"/>
+    </record>
+
+</odoo>

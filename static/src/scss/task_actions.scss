@@ -1,0 +1,355 @@
+.o_form_view .ta_form_header {
+    border-bottom: 1px solid #dfe5ef;
+    background: #f8fafc;
+}
+
+.o_form_view .ta_primary_action,
+.o_form_view .ta_secondary_action {
+    border-radius: 8px;
+    font-weight: 700;
+    transition: transform 140ms ease, box-shadow 140ms ease, background-color 140ms ease;
+}
+
+.o_form_view .ta_primary_action:hover,
+.o_form_view .ta_secondary_action:hover {
+    transform: translateY(-1px);
+}
+
+.o_form_view .ta_primary_action {
+    border-color: #16756f;
+    background: linear-gradient(135deg, #16756f 0%, #0f4f5e 100%);
+    box-shadow: 0 8px 18px rgba(15, 79, 94, 0.22);
+}
+
+.o_form_view .ta_secondary_action {
+    border: 1px solid #cad3df;
+    background: #ffffff;
+    color: #263446;
+}
+
+.ta_form_sheet {
+    position: relative;
+    overflow: hidden;
+    max-width: 1180px;
+    border: 1px solid #dfe5ef;
+    border-radius: 8px;
+    background:
+        linear-gradient(135deg, rgba(22, 117, 111, 0.08) 0%, rgba(255, 255, 255, 0) 34%),
+        linear-gradient(180deg, #ffffff 0%, #f7f9fc 100%);
+    box-shadow: 0 18px 42px rgba(31, 41, 55, 0.11);
+}
+
+.ta_form_sheet::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto;
+    height: 5px;
+    background: linear-gradient(90deg, #16756f, #e2a338, #d95c49, #2b5f95);
+}
+
+.ta_form_sheet.ta_is_overdue::before {
+    background: linear-gradient(90deg, #c4332b, #e48d36, #c4332b);
+}
+
+.ta_form_sheet.ta_is_done {
+    background:
+        linear-gradient(135deg, rgba(44, 126, 92, 0.1) 0%, rgba(255, 255, 255, 0) 34%),
+        linear-gradient(180deg, #ffffff 0%, #f5f8f6 100%);
+}
+
+.ta_hero {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 26px 28px 22px;
+    margin: -16px -16px 18px;
+    border-bottom: 1px solid #e7ecf3;
+    background:
+        linear-gradient(135deg, rgba(22, 117, 111, 0.12), rgba(43, 95, 149, 0.08)),
+        #ffffff;
+}
+
+.ta_hero_content {
+    min-width: 0;
+    flex: 1;
+}
+
+.ta_eyebrow {
+    color: #607189;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+
+.ta_form_title {
+    margin: 0;
+    padding-left: 18px;
+    border-left: 5px solid #16756f;
+}
+
+.ta_form_title label {
+    color: #0f4f5e;
+    font-weight: 800;
+}
+
+.ta_form_title h1 {
+    color: #111827;
+    font-weight: 800;
+}
+
+.ta_form_title h1 input,
+.ta_form_title h1 textarea {
+    border-bottom-color: #9fb1c8;
+}
+
+.ta_form_title h1 input:focus,
+.ta_form_title h1 textarea:focus {
+    border-bottom-color: #16756f;
+    box-shadow: 0 2px 0 rgba(22, 117, 111, 0.22);
+}
+
+.ta_hero_pulse {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 132px;
+    min-height: 48px;
+    padding: 10px 14px;
+    border: 1px solid rgba(22, 117, 111, 0.22);
+    border-radius: 8px;
+    background: #ffffff;
+    box-shadow: 0 10px 22px rgba(38, 52, 70, 0.1);
+}
+
+.ta_hero_pulse .badge {
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.ta_status_panel {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+    gap: 14px;
+    margin: 18px 0 22px;
+}
+
+.ta_status_item {
+    position: relative;
+    min-height: 86px;
+    padding: 16px 16px 14px 58px;
+    overflow: hidden;
+    border: 1px solid #e1e7ef;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.86);
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.07);
+    transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.ta_status_item:hover {
+    border-color: rgba(22, 117, 111, 0.38);
+    box-shadow: 0 16px 30px rgba(15, 23, 42, 0.12);
+    transform: translateY(-2px);
+}
+
+.ta_status_icon {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 8px;
+    background: #e8f4f2;
+    color: #16756f;
+    font-size: 12px;
+    font-weight: 900;
+}
+
+.ta_status_label {
+    display: block;
+    color: #607189;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    margin-bottom: 7px;
+    text-transform: uppercase;
+}
+
+.ta_status_item strong {
+    display: block;
+    color: #121a25;
+    font-size: 15px;
+    line-height: 1.3;
+}
+
+.ta_avancement_group {
+    margin: 4px 0 18px;
+    padding: 18px;
+    border: 1px solid #e1e7ef;
+    border-radius: 8px;
+    background: #ffffff;
+    box-shadow: 0 12px 26px rgba(15, 23, 42, 0.06);
+}
+
+.ta_avancement_group .o_inner_group {
+    margin-bottom: 0;
+}
+
+.ta_avancement_group .o_horizontal_separator {
+    color: #111827;
+    font-size: 13px;
+    font-weight: 900;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.ta_notebook {
+    margin-top: 12px;
+}
+
+.ta_notebook .nav-tabs {
+    border-color: #dfe5ef;
+}
+
+.ta_notebook .nav-link {
+    border-radius: 8px 8px 0 0;
+    font-weight: 700;
+}
+
+.ta_notebook .tab-content {
+    min-height: 120px;
+    padding-top: 14px;
+    border: 1px solid #dfe5ef;
+    border-top: 0;
+    background: #ffffff;
+}
+
+.o_kanban_renderer .ta_kanban_card {
+    position: relative;
+    overflow: hidden;
+    padding: 16px;
+    border: 1px solid #e1e7ef;
+    border-left: 5px solid #16756f;
+    border-radius: 8px;
+    background: #ffffff;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
+    transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.o_kanban_renderer .ta_kanban_card:hover {
+    box-shadow: 0 18px 36px rgba(15, 23, 42, 0.16);
+    transform: translateY(-3px);
+}
+
+.ta_kanban_glow {
+    position: absolute;
+    inset: 0 0 auto;
+    height: 4px;
+    background: linear-gradient(90deg, #16756f, #2b5f95);
+}
+
+.ta_kanban_card.ta_status_overdue {
+    border-left-color: #c4332b;
+}
+
+.ta_kanban_card.ta_status_overdue .ta_kanban_glow {
+    background: linear-gradient(90deg, #c4332b, #e48d36);
+}
+
+.ta_kanban_card.ta_status_today {
+    border-left-color: #e2a338;
+}
+
+.ta_kanban_card.ta_status_today .ta_kanban_glow {
+    background: linear-gradient(90deg, #e2a338, #d95c49);
+}
+
+.ta_kanban_card.ta_status_done {
+    border-left-color: #617083;
+    opacity: 0.82;
+}
+
+.ta_kanban_card.ta_status_done .ta_kanban_glow {
+    background: linear-gradient(90deg, #617083, #9aa7b7);
+}
+
+.ta_kanban_body {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.ta_kanban_metric {
+    min-height: 62px;
+    padding: 10px 11px;
+    border: 1px solid #edf1f6;
+    border-radius: 8px;
+    background: #f8fafc;
+}
+
+.ta_kanban_metric .text-muted {
+    display: block;
+    color: #607189 !important;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.ta_kanban_card .o_kanban_record_title {
+    color: #111827;
+    font-size: 15px;
+    line-height: 1.35;
+}
+
+.ta_dynamic_ready {
+    animation: taRiseIn 260ms ease both;
+}
+
+.ta_attention {
+    animation: taPulse 1.8s ease-in-out infinite;
+}
+
+@keyframes taRiseIn {
+    from {
+        opacity: 0.64;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes taPulse {
+    0%,
+    100% {
+        box-shadow: 0 10px 24px rgba(196, 51, 43, 0.12);
+    }
+    50% {
+        box-shadow: 0 14px 34px rgba(196, 51, 43, 0.26);
+    }
+}
+
+@media (max-width: 768px) {
+    .ta_hero {
+        flex-direction: column;
+        padding: 22px 18px 18px;
+    }
+
+    .ta_hero_pulse {
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .ta_status_panel,
+    .ta_kanban_body {
+        grid-template-columns: 1fr;
+    }
+}

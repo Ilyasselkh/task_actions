@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_task_actions_root"
+              name="AR Top 5"
+              sequence="10"/>
+
+    <menuitem id="menu_task_actions_items"
+              name="Plan d'actions"
+              parent="menu_task_actions_root"
+              action="action_task_action_item"
+              sequence="10"/>
+
+    <menuitem id="menu_task_actions_archive"
+              name="Actions clôturées"
+              parent="menu_task_actions_root"
+              action="action_task_action_item_archive"
+              sequence="20"/>
+</odoo>

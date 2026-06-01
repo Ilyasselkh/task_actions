@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- LISTE -->
+    <record id="view_task_action_item_tree" model="ir.ui.view">
+        <field name="name">task.action.item.list</field>
+        <field name="model">task.action.item</field>
+        <field name="arch" type="xml">
+            <list string="Plan d'actions"
+                  default_order="state asc, deadline asc, priority desc"
+                  decoration-danger="deadline_status == 'overdue'"
+                  decoration-warning="deadline_status == 'today'"
+                  decoration-muted="state == 'done'">
+                <field name="is_overdue" column_invisible="1"/>
+                <field name="deadline_status" column_invisible="1"/>
+                <field name="name" string="Action"/>
+                <field name="user_id" string="Responsable"/>
+                <field name="deadline" string="Échéance"/>
+                <field name="remaining_days" string="Jours"/>
+                <field name="priority" string="Priorité" widget="badge"/>
+                <field name="state" string="Statut" widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- FORMULAIRE -->
+    <record id="view_task_action_item_form" model="ir.ui.view">
+        <field name="name">task.action.item.form</field>
+        <field name="model">task.action.item</field>
+        <field name="arch" type="xml">
+            <form string="Action">
+                <header class="ta_form_header">
+                    <button name="action_mark_done"
+                            type="object"
+                            string="Clôturer"
+                            class="btn-primary ta_primary_action"
+                            invisible="state == 'done'"/>
+                    <button name="action_mark_todo"
+                            type="object"
+                            string="Remettre en cours"
+                            class="ta_secondary_action"
+                            invisible="state == 'todo'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="todo,done"/>
+                </header>
+
+                <sheet class="ta_form_sheet">
+                    <widget name="web_ribbon"
+                            title="En retard"
+                            bg_color="text-bg-danger"
+                            invisible="not is_overdue"/>
+
+                    <div class="ta_hero">
+                        <div class="ta_hero_content">
+                            <div class="ta_eyebrow">Plan d'actions</div>
+                            <div class="oe_title ta_form_title">
+                                <label for="name" string="Action"/>
+                                <h1>
+                                    <field name="name" placeholder="Ex : Finaliser le point hebdomadaire"/>
+                                </h1>
+                            </div>
+                        </div>
+                        <div class="ta_hero_pulse" aria-hidden="true">
+                            <field name="deadline_status" widget="badge"/>
+                        </div>
+                    </div>
+
+                    <div class="ta_status_panel">
+                        <div class="ta_status_item">
+                            <span class="ta_status_icon">R</span>
+                            <span class="ta_status_label">Responsable</span>
+                            <strong><field name="user_id"/></strong>
+                        </div>
+                        <div class="ta_status_item">
+                            <span class="ta_status_icon">E</span>
+                            <span class="ta_status_label">Échéance</span>
+                            <strong><field name="deadline"/></strong>
+                        </div>
+                        <div class="ta_status_item">
+                            <span class="ta_status_icon">P</span>
+                            <span class="ta_status_label">Priorité</span>
+                            <strong><field name="priority"/></strong>
+                        </div>
+                        <div class="ta_status_item">
+                            <span class="ta_status_icon">J</span>
+                            <span class="ta_status_label">Jours restants</span>
+                            <strong><field name="remaining_days"/></strong>
+                        </div>
+                    </div>
+
+                    <group class="ta_avancement_group">
+                        <group string="Avancement">
+                            <field name="deadline_status" readonly="1" widget="badge"/>
+                            <field name="state" readonly="1" widget="badge"/>
+                            <field name="remaining_days" readonly="1"/>
+                            <field name="is_overdue" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <notebook class="ta_notebook">
+                        <page string="Description">
+                            <field name="description"
+                                   placeholder="Contexte, livrables attendus, blocages et prochaines étapes..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- KANBAN -->
+    <record id="view_task_action_item_kanban" model="ir.ui.view">
+        <field name="name">task.action.item.kanban</field>
+        <field name="model">task.action.item</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="state" quick_create="false" sample="1">
+                <field name="name"/>
+                <field name="user_id"/>
+                <field name="deadline"/>
+                <field name="remaining_days"/>
+                <field name="deadline_status"/>
+                <field name="priority"/>
+                <field name="state"/>
+                <field name="is_overdue"/>
+
+                <templates>
+                    <t t-name="card">
+                        <div t-attf-class="oe_kanban_card oe_kanban_global_click ta_kanban_card ta_status_#{record.deadline_status.raw_value}">
+                            <div class="ta_kanban_glow" aria-hidden="true"/>
+                            <div class="o_kanban_record_top">
+                                <div class="o_kanban_record_headings">
+                                    <strong class="o_kanban_record_title">
+                                        <field name="name"/>
+                                    </strong>
+                                    <div class="text-muted mt4">
+                                        <field name="user_id"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="o_kanban_record_body mt8 ta_kanban_body">
+                                <div class="ta_kanban_metric">
+                                    <span class="text-muted">Échéance</span>
+                                    <div>
+                                        <field name="deadline"/>
+                                    </div>
+                                </div>
+                                <div class="ta_kanban_metric">
+                                    <span class="text-muted">Situation</span>
+                                    <div>
+                                        <field name="deadline_status" widget="badge"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="o_kanban_record_bottom mt8">
+                                <div class="oe_kanban_bottom_left">
+                                    <field name="priority" widget="badge"/>
+                                </div>
+                                <div class="oe_kanban_bottom_right">
+                                    <span class="text-muted">Jours </span>
+                                    <field name="remaining_days"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- RECHERCHE -->
+    <record id="view_task_action_item_search" model="ir.ui.view">
+        <field name="name">task.action.item.search</field>
+        <field name="model">task.action.item</field>
+        <field name="arch" type="xml">
+            <search string="Rechercher">
+                <field name="name" string="Action"/>
+                <field name="user_id" string="Responsable"/>
+                <field name="deadline" string="Échéance"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- ACTION WINDOW -->
+    <record id="action_task_action_item" model="ir.actions.act_window">
+        <field name="name">Plan d'actions</field>
+        <field name="res_model">task.action.item</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="search_view_id" ref="view_task_action_item_search"/>
+        <field name="context">{'default_state': 'todo'}</field>
+    </record>
+
+    <!-- ACTION WINDOW : ARCHIVES -->
+    <record id="action_task_action_item_archive" model="ir.actions.act_window">
+        <field name="name">Actions clôturées</field>
+        <field name="res_model">task.action.item</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('active','=',False)]</field>
+        <field name="context">{'create': False}</field>
+    </record>
+
+</odoo>
