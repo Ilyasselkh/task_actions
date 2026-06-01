@@ -1,53 +1,90 @@
 # AR - TOP 5 - AC&D
 
-Module Odoo de suivi des actions prioritaires avec responsable, échéance, priorité et statut.
 
-## Objectif
+> Documentation du module de plan d?actions avec responsables, ?ch?ances et suivi.
 
-Ce module centralise les actions à réaliser dans un tableau de pilotage simple. Chaque action est affectée à un utilisateur, possède une échéance, une priorité et un état d'avancement. Le module utilise le chatter Odoo pour conserver l'historique des changements et les échanges autour de l'action.
 
-## Dépendances
+## Vue d?ensemble
+
+Ce module fournit une application l?g?re de pilotage des actions prioritaires. Il est con?u pour suivre les actions ouvertes, les responsables, les ?ch?ances, les priorit?s et les retards. Le chatter conserve l?historique, ce qui permet de garder une trace des d?cisions et des cl?tures.
+
+## Utilisateurs concern?s
+
+- Responsable action : ex?cute et met ? jour son action.
+- Manager : suit les actions ouvertes, en retard ou cl?tur?es.
+- Administrateur : g?re les droits d?acc?s.
+
+## Workflow m?tier
+
+1. Cr?ation de l?action
+2. Affectation d?un responsable
+3. Suivi de l??ch?ance
+4. Marquage comme r?alis?e
+5. Archivage automatique
+6. R?ouverture possible
+
+## Fonctionnement op?rationnel
+
+- Cr?er une action avec un responsable et une ?ch?ance.
+- Classer la priorit? : basse, normale ou haute.
+- Surveiller les indicateurs : en retard, aujourd?hui, ? venir ou termin?e.
+- Cliquer sur le bouton de cl?ture pour marquer l?action comme r?alis?e.
+- Consulter les actions archiv?es si besoin de r?ouverture.
+
+## Configuration recommand?e
+
+- Configurer les groupes dans security/task_actions_groups.xml.
+- V?rifier les acc?s au mod?le task.action.item.
+- Adapter les vues si des filtres par ?quipe ou service sont n?cessaires.
+
+## D?pendances Odoo
 
 - `base`
 - `mail`
 
-## Modèle principal
+## Mod?les techniques
 
-- `task.action.item` : action à suivre.
+- `task.action.item` : Action à suivre (`models/action_item.py`)
 
-Champs principaux :
+## ?tats d?tect?s dans le code
 
-- `name` : intitulé de l'action.
-- `user_id` : responsable.
-- `deadline` : date limite.
-- `priority` : basse, normale ou haute.
-- `state` : `todo` ou `done`.
-- `description` : détails de l'action.
-- `remaining_days`, `is_overdue`, `deadline_status` : indicateurs calculés selon l'échéance.
+- `models/action_item.py` : `todo` (À réaliser), `done` (Réalisée)
 
-## Fonctionnement
+## Actions serveur principales
 
-1. L'utilisateur crée une action et renseigne le responsable, la date limite, la priorité et les détails.
-2. Le module calcule automatiquement la situation de l'échéance : à venir, aujourd'hui, en retard ou terminée.
-3. Une action peut être marquée comme réalisée avec `action_mark_done`; elle passe à `done` et devient inactive.
-4. Une action archivée peut être remise en cours avec `action_mark_todo`.
-5. Les changements importants sont tracés dans le chatter grâce à `mail.thread`.
+- `action_mark_done` (`models/action_item.py`)
+- `action_mark_todo` (`models/action_item.py`)
 
-## Vues et menus
-
-Le module fournit des vues de liste, formulaire et recherche pour piloter les actions par statut, responsable, priorité et échéance.
-
-## Sécurité
-
-Les groupes et droits d'accès sont définis dans :
+## Fichiers charg?s par le manifest
 
 - `security/task_actions_groups.xml`
 - `security/ir.model.access.csv`
+- `views/action_item_views.xml`
+- `views/menu.xml`
 
-## Assets
+## S?curit? et droits
 
-Des fichiers SCSS et JavaScript améliorent l'affichage backend :
+Le module s?appuie sur les fichiers suivants pour d?finir les groupes, r?gles d?enregistrement et droits d?acc?s :
 
-- `static/src/scss/task_actions.scss`
+- `security/ir.model.access.csv`
+- `security/task_actions_groups.xml`
+
+## Assets et interface
+
 - `static/src/js/task_actions.js`
+- `static/src/scss/task_actions.scss`
 
+## Bonnes pratiques d?utilisation
+
+- V?rifier que chaque utilisateur Odoo est li? au bon employ? lorsque le module d?pend de `hr.employee`.
+- Tester le workflow avec un dossier de test avant utilisation en production.
+- Contr?ler les groupes de s?curit? apr?s installation afin que seuls les bons r?les voient les boutons de validation.
+- Garder les templates e-mail et rapports align?s avec les proc?dures internes.
+- Sauvegarder la base avant toute modification structurelle du module.
+
+## Maintenance
+
+- Les ?volutions fonctionnelles doivent ?tre ajout?es dans les mod?les Python, les vues XML et les r?gles de s?curit? correspondantes.
+- Apr?s modification des vues, mettre ? jour le module depuis Odoo ou red?marrer le serveur selon le type de changement.
+- Apr?s modification des assets, vider le cache navigateur et recompiler les assets si n?cessaire.
+- Toute nouvelle ?tape de workflow doit ?tre accompagn?e des droits, boutons, notifications et filtres correspondants.
