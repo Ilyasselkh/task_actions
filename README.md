@@ -1,90 +1,78 @@
 # AR - TOP 5 - AC&D
 
+Module Odoo de suivi des actions prioritaires avec responsable, echeance, priorite, statut et historique dans le chatter.
 
-> Documentation du module de plan d?actions avec responsables, ?ch?ances et suivi.
+## Objectif
 
+Cette documentation explique le perimetre fonctionnel du module, les roles utilisateurs, le workflow, la configuration et les principaux objets techniques.
 
-## Vue d?ensemble
+## Utilisateurs concernes
 
-Ce module fournit une application l?g?re de pilotage des actions prioritaires. Il est con?u pour suivre les actions ouvertes, les responsables, les ?ch?ances, les priorit?s et les retards. Le chatter conserve l?historique, ce qui permet de garder une trace des d?cisions et des cl?tures.
+- Responsable action
+- Manager
+- Administrateur Odoo
 
-## Utilisateurs concern?s
+## Workflow metier
 
-- Responsable action : ex?cute et met ? jour son action.
-- Manager : suit les actions ouvertes, en retard ou cl?tur?es.
-- Administrateur : g?re les droits d?acc?s.
+1. Creation de action
+2. Affectation du responsable
+3. Suivi de echeance
+4. Detection des retards
+5. Marquage comme realisee
+6. Archivage ou reouverture
 
-## Workflow m?tier
+## Fonctionnement operationnel
 
-1. Cr?ation de l?action
-2. Affectation d?un responsable
-3. Suivi de l??ch?ance
-4. Marquage comme r?alis?e
-5. Archivage automatique
-6. R?ouverture possible
+- Creer une action avec responsable et echeance.
+- Definir la priorite.
+- Suivre les indicateurs: en retard, aujourd hui, a venir, terminee.
+- Marquer action comme realisee.
+- Reouvrir une action archivee si necessaire.
 
-## Fonctionnement op?rationnel
-
-- Cr?er une action avec un responsable et une ?ch?ance.
-- Classer la priorit? : basse, normale ou haute.
-- Surveiller les indicateurs : en retard, aujourd?hui, ? venir ou termin?e.
-- Cliquer sur le bouton de cl?ture pour marquer l?action comme r?alis?e.
-- Consulter les actions archiv?es si besoin de r?ouverture.
-
-## Configuration recommand?e
+## Configuration recommandee
 
 - Configurer les groupes dans security/task_actions_groups.xml.
-- V?rifier les acc?s au mod?le task.action.item.
-- Adapter les vues si des filtres par ?quipe ou service sont n?cessaires.
+- Verifier les droits sur task.action.item.
+- Adapter les filtres par equipe si necessaire.
 
-## D?pendances Odoo
+## Dependances Odoo
 
 - `base`
 - `mail`
 
-## Mod?les techniques
+## Modeles principaux
 
-- `task.action.item` : Action à suivre (`models/action_item.py`)
+- `task.action.item`
 
-## ?tats d?tect?s dans le code
+## Structure importante du module
 
-- `models/action_item.py` : `todo` (À réaliser), `done` (Réalisée)
-
-## Actions serveur principales
-
-- `action_mark_done` (`models/action_item.py`)
-- `action_mark_todo` (`models/action_item.py`)
-
-## Fichiers charg?s par le manifest
-
-- `security/task_actions_groups.xml`
 - `security/ir.model.access.csv`
+- `security/task_actions_groups.xml`
 - `views/action_item_views.xml`
 - `views/menu.xml`
+- `models/__init__.py`
+- `models/action_item.py`
 
-## S?curit? et droits
+## Securite
 
-Le module s?appuie sur les fichiers suivants pour d?finir les groupes, r?gles d?enregistrement et droits d?acc?s :
+Les droits sont geres par les fichiers du dossier `security`. Il faut verifier les groupes, les regles enregistrement et les acces CSV apres installation ou modification du module.
 
-- `security/ir.model.access.csv`
-- `security/task_actions_groups.xml`
+## Notifications et suivi
 
-## Assets et interface
+Les modules qui dependent de `mail` utilisent le chatter Odoo pour tracer les changements. Les templates mail presents dans le dossier `data` servent a notifier les acteurs concernes par les transitions.
 
-- `static/src/js/task_actions.js`
-- `static/src/scss/task_actions.scss`
+## Installation
 
-## Bonnes pratiques d?utilisation
-
-- V?rifier que chaque utilisateur Odoo est li? au bon employ? lorsque le module d?pend de `hr.employee`.
-- Tester le workflow avec un dossier de test avant utilisation en production.
-- Contr?ler les groupes de s?curit? apr?s installation afin que seuls les bons r?les voient les boutons de validation.
-- Garder les templates e-mail et rapports align?s avec les proc?dures internes.
-- Sauvegarder la base avant toute modification structurelle du module.
+1. Copier le module dans le dossier addons Odoo.
+2. Redemarrer le serveur Odoo si necessaire.
+3. Mettre a jour la liste des applications.
+4. Installer ou mettre a jour le module.
+5. Verifier les droits utilisateurs et tester un dossier de bout en bout.
 
 ## Maintenance
 
-- Les ?volutions fonctionnelles doivent ?tre ajout?es dans les mod?les Python, les vues XML et les r?gles de s?curit? correspondantes.
-- Apr?s modification des vues, mettre ? jour le module depuis Odoo ou red?marrer le serveur selon le type de changement.
-- Apr?s modification des assets, vider le cache navigateur et recompiler les assets si n?cessaire.
-- Toute nouvelle ?tape de workflow doit ?tre accompagn?e des droits, boutons, notifications et filtres correspondants.
+- Ajouter toute nouvelle etape a la fois dans le modele Python, les vues XML, les droits et les notifications.
+- Tester les workflows avec plusieurs roles utilisateurs.
+- Mettre a jour les rapports et templates mail quand la procedure interne change.
+- Eviter de modifier les donnees de production sans sauvegarde.
+- Documenter toute evolution fonctionnelle dans ce README.
