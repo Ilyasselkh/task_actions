@@ -77,11 +77,11 @@ class ActionItem(models.Model):
     def action_mark_done(self):
         self.write({"state": "done", "active": False})
         for rec in self:
-            rec.message_post(body=_("Action marquée comme réalisée et archivée."))
+            rec.message_post(body=_("Action réalisée et archivée par %s.") % self.env.user.name)
         return self.env.ref("task_actions.action_task_action_item_archive").read()[0]
 
     def action_mark_todo(self):
         self.write({"state": "todo", "active": True})
         for rec in self:
-            rec.message_post(body=_("Action remise en cours."))
+            rec.message_post(body=_("Action remise en cours par %s.") % self.env.user.name)
         return self.env.ref("task_actions.action_task_action_item").read()[0]
