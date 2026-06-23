@@ -1,3 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-access_task_action_item_user,task.action.item user,model_task_action_item,task_actions.group_task_actions_user,1,1,1,0
-access_task_action_item_manager,task.action.item manager,model_task_action_item,task_actions.group_task_actions_manager,1,1,1,1
+access_task_action_item_user,task.action.item user,model_task_action_item,task_actions.group_task_actions_user,1,1,1,1
+access_task_action_responsible_user,task.action.responsible user,model_task_action_responsible,task_actions.group_task_actions_user,1,1,1,0

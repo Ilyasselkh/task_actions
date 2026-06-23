@@ -140,7 +140,7 @@
     position: relative;
     min-height: 86px;
     padding: 16px 16px 14px 58px;
-    overflow: hidden;
+    overflow: visible;
     border: 1px solid #e1e7ef;
     border-radius: 8px;
     background: rgba(255, 255, 255, 0.86);
@@ -149,9 +149,14 @@
 }
 
 .ta_status_item:hover {
+    z-index: 5;
     border-color: rgba(22, 117, 111, 0.38);
     box-shadow: 0 16px 30px rgba(15, 23, 42, 0.12);
     transform: translateY(-2px);
+}
+
+.ta_status_item:focus-within {
+    z-index: 10;
 }
 
 .ta_status_icon {
@@ -185,6 +190,30 @@
     color: #121a25;
     font-size: 15px;
     line-height: 1.3;
+}
+
+.ta_status_item .o_field_many2many_tags,
+.ta_kanban_card .o_field_many2many_tags,
+.ta_notebook .o_field_many2many_tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    min-width: 0;
+    max-width: 100%;
+}
+
+.ta_status_item .o_field_many2many_tags .badge,
+.ta_kanban_card .o_field_many2many_tags .badge,
+.ta_notebook .o_field_many2many_tags .badge {
+    max-width: 100%;
+    white-space: normal;
+    text-align: left;
+}
+
+.ta_status_item .o_field_many2many_tags .o_tag_badge_text,
+.ta_kanban_card .o_field_many2many_tags .o_tag_badge_text,
+.ta_notebook .o_field_many2many_tags .o_tag_badge_text {
+    overflow-wrap: anywhere;
 }
 
 .ta_avancement_group {
@@ -227,6 +256,14 @@
     border: 1px solid #dfe5ef;
     border-top: 0;
     background: #ffffff;
+}
+
+.ta_notebook .o_list_renderer {
+    overflow-x: auto;
+}
+
+.ta_notebook .o_list_table {
+    min-width: 720px;
 }
 
 .o_kanban_renderer .ta_kanban_card {
@@ -302,6 +339,31 @@
     text-transform: uppercase;
 }
 
+.ta_kanban_children {
+    padding: 9px 10px;
+    border: 1px solid #e6edf5;
+    border-radius: 8px;
+    background: #ffffff;
+}
+
+.ta_kanban_children_label {
+    display: block;
+    color: #607189;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+}
+
+.ta_kanban_children_text {
+    color: #263446;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.45;
+    white-space: pre-line;
+}
+
 .ta_kanban_card .o_kanban_record_title {
     color: #111827;
     font-size: 15px;
@@ -351,5 +413,53 @@
     .ta_status_panel,
     .ta_kanban_body {
         grid-template-columns: 1fr;
+    }
+
+    .ta_status_item {
+        min-height: auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .ta_form_sheet {
+        border-right: 0;
+        border-left: 0;
+        border-radius: 0;
+    }
+
+    .ta_hero {
+        gap: 14px;
+        margin-right: -12px;
+        margin-left: -12px;
+        padding: 18px 14px;
+    }
+
+    .ta_form_title {
+        padding-left: 12px;
+    }
+
+    .ta_form_title h1 {
+        font-size: 24px;
+    }
+
+    .ta_status_panel {
+        gap: 10px;
+        margin: 14px 0 16px;
+    }
+
+    .ta_status_item {
+        padding: 14px 12px 13px 50px;
+    }
+
+    .ta_status_icon {
+        left: 12px;
+    }
+
+    .ta_avancement_group {
+        padding: 14px 12px;
+    }
+
+    .ta_notebook .tab-content {
+        padding-top: 10px;
     }
 }

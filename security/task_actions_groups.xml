@@ -12,10 +12,4 @@
         <field name="name">Actions - Utilisateur</field>
     </record>
 
-    <!-- Groupe Manager -->
-    <record id="group_task_actions_manager" model="res.groups">
-        <field name="name">Actions - Manager</field>
-        <field name="implied_ids" eval="[(4, ref('task_actions.group_task_actions_user'))]"/>
-    </record>
-
 </odoo>

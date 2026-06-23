@@ -7,7 +7,7 @@
     <menuitem id="menu_task_actions_items"
               name="Plan d'actions"
               parent="menu_task_actions_root"
-              action="action_task_action_item"
+              action="action_task_action_responsible"
               sequence="10"/>
 
     <menuitem id="menu_task_actions_archive"
