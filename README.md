@@ -1,78 +1,132 @@
 # AR - TOP 5 - AC&D
 
-Module Odoo de suivi des actions prioritaires avec responsable, echeance, priorite, statut et historique dans le chatter.
+Module Odoo de suivi des actions prioritaires avec responsables, echeances, priorites, sous-actions et historique dans le chatter.
 
-## Objectif
+Le module sert a centraliser les actions issues des rituels TOP 5 / AC&D et a donner une vision claire des actions a realiser, en retard, a venir ou terminees.
 
-Cette documentation explique le perimetre fonctionnel du module, les roles utilisateurs, le workflow, la configuration et les principaux objets techniques.
+## Objectif fonctionnel
 
-## Utilisateurs concernes
+Assurer le suivi operationnel des actions jusqu'a leur cloture.
 
-- Responsable action
-- Manager
-- Administrateur Odoo
+Le module permet de :
 
-## Workflow metier
+- creer une action a suivre ;
+- affecter un ou plusieurs responsables ;
+- definir une echeance ;
+- definir une priorite basse, normale ou haute ;
+- ajouter une description ;
+- rattacher des sous-actions ;
+- suivre les indicateurs de delai ;
+- marquer une action comme realisee ;
+- archiver automatiquement les actions realisees ;
+- remettre une action en cours si necessaire ;
+- tracer les changements dans le chatter Odoo.
 
-1. Creation de action
-2. Affectation du responsable
-3. Suivi de echeance
-4. Detection des retards
-5. Marquage comme realisee
-6. Archivage ou reouverture
+## Roles fonctionnels
+
+### Responsable action
+
+Le responsable action suit l'action qui lui est affectee.
+
+Il peut :
+
+- consulter ses actions ;
+- mettre a jour les details ;
+- traiter les sous-actions ;
+- marquer l'action comme realisee.
+
+### Manager / pilote TOP 5
+
+Le manager suit l'avancement global.
+
+Il peut :
+
+- consulter les actions ouvertes ;
+- filtrer par responsable, echeance, priorite ou retard ;
+- relancer les actions en retard ;
+- verifier les actions archivees.
+
+### Administrateur
+
+L'administrateur gere les droits et la structure du module.
+
+## Etats principaux
+
+Les actions utilisent deux etats :
+
+- `A realiser`
+- `Realisee`
+
+Les indicateurs de delai sont calcules automatiquement :
+
+- `En retard`
+- `Aujourd'hui`
+- `A venir`
+- `Terminee`
 
 ## Fonctionnement operationnel
 
-- Creer une action avec responsable et echeance.
-- Definir la priorite.
-- Suivre les indicateurs: en retard, aujourd hui, a venir, terminee.
-- Marquer action comme realisee.
-- Reouvrir une action archivee si necessaire.
+1. Creer une action.
+2. Renseigner le ou les responsables.
+3. Definir l'echeance et la priorite.
+4. Ajouter une description si necessaire.
+5. Creer des sous-actions lorsque l'action doit etre detaillee.
+6. Suivre le statut d'echeance.
+7. Marquer l'action comme realisee.
+8. Consulter l'action dans les archives si besoin.
 
-## Configuration recommandee
+## Sous-actions
 
-- Configurer les groupes dans security/task_actions_groups.xml.
-- Verifier les droits sur task.action.item.
-- Adapter les filtres par equipe si necessaire.
+Une action peut contenir des sous-actions.
 
-## Dependances Odoo
+Le module bloque les boucles de hierarchie afin qu'une action ne puisse pas devenir sa propre sous-action.
 
-- `base`
-- `mail`
+## Securite
+
+Les droits sont definis dans :
+
+- `security/task_actions_groups.xml`
+- `security/ir.model.access.csv`
+
+Points a verifier :
+
+- acces aux actions principales ;
+- acces aux actions archivees ;
+- droits des responsables ;
+- droits de creation et modification.
 
 ## Modeles principaux
 
 - `task.action.item`
+- `task.action.responsible`
 
-## Structure importante du module
+## Structure du module
 
-- `security/ir.model.access.csv`
 - `security/task_actions_groups.xml`
+- `security/ir.model.access.csv`
 - `views/action_item_views.xml`
 - `views/menu.xml`
-- `models/__init__.py`
 - `models/action_item.py`
-
-## Securite
-
-Les droits sont geres par les fichiers du dossier `security`. Il faut verifier les groupes, les regles enregistrement et les acces CSV apres installation ou modification du module.
-
-## Notifications et suivi
-
-Les modules qui dependent de `mail` utilisent le chatter Odoo pour tracer les changements. Les templates mail presents dans le dossier `data` servent a notifier les acteurs concernes par les transitions.
+- `models/action_responsible.py`
+- `static/src/scss/task_actions.scss`
+- `static/src/js/task_actions.js`
 
 ## Installation
 
 1. Copier le module dans le dossier addons Odoo.
 2. Redemarrer le serveur Odoo si necessaire.
 3. Mettre a jour la liste des applications.
-4. Installer ou mettre a jour le module.
-5. Verifier les droits utilisateurs et tester un dossier de bout en bout.
+4. Installer le module.
+5. Verifier les groupes utilisateurs.
+6. Creer une action de test avec responsable et echeance.
+7. Tester la cloture et la reouverture.
 
-## Maintenance
+## Maintenance fonctionnelle
 
-- Ajouter toute nouvelle etape a la fois dans le modele Python, les vues XML, les droits et les notifications.
-- Tester les workflows avec plusieurs roles utilisateurs.
-- Mettre a jour les rapports et templates mail quand la procedure interne change.
-- Eviter de modifier les donnees de production sans sauvegarde.
-- Documenter toute evolution fonctionnelle dans ce README.
+Lorsqu'une regle de suivi change, verifier aussi :
+
+- les champs du modele `task.action.item` ;
+- les vues liste, formulaire et archive ;
+- les filtres de retard et d'echeance ;
+- les droits de securite ;
+- ce README.
